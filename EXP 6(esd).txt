@@ -1,0 +1,68 @@
+6A)0's and 1's(bit field)
+
+	AREA DATA1, DATA, READONLY  
+	DCB 0X0000008F  
+	AREA DATA2, DATA, READWRITE  
+ONES DCB 0  
+ZEROS DCB 0  
+	AREA PROGRAM, CODE, READONLY  
+ENTRY  
+	EXPORT START  
+START  
+	LDR R0,=DATA1  
+	EOR R5, R5, R5  
+	EOR R6, R6, R6  
+	MOV R1, #32  
+	LDR R3,[R0]  
+TOP TST R3,#01  
+	BEQ INC_ZERO  
+	ADD R6,#1  
+	B DN  
+INC_ZERO  
+	ADD R5,#1  
+DN LSR R3, #1  
+	SUB R1, #1  
+	CMP R1,#0  
+	BNE TOP  
+	LDR R0,=ZEROS  
+	STRB R6,[R0]  
+	LDR R0,=ONES  
+	STRB R5,[R0]  
+STOP B STOP  
+	END
+6B)POSITIVE/NEGETIVE
+
+	AREA PROG2, CODE, READONLY  
+ENTRY  
+	EXPORT START  
+START  
+	LDR R0,= -11  
+	TST R0, #0X80000000  
+	BEQ num_is_pos  
+	BNE num_is_neg  
+num_is_pos  
+	MOV R3, #0X00  
+	B STOP  
+num_is_neg  
+	MOV R3, #0XFF  
+STOP B STOP  
+	END  
+
+6C)ODD/EVEN
+
+	AREA PROG2, CODE, READONLY  
+ENTRY  
+	EXPORT START  
+START  
+	LDR R0,=11  
+	TST R0, #1  
+	BEQ num_is_even  
+	BNE num_is_odd  
+num_is_even  
+	MOV R3, #0X00  
+	B STOP  
+num_is_odd  
+	MOV R3, #0XFF  
+STOP B STOP  
+	END  
+
