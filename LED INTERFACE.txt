@@ -1,0 +1,56 @@
+>WITHOUT DELAY
+
+ 
+#include"stm32F4xx_hal.h"   ; STM32F4xx_config_hal.h 
+#include"Board_LED.h"  
+int main(void)  
+{  
+const unsigned int num=0;  
+LED_Initialize();  
+while(1)  
+{  
+LED_On(num);  
+LED_Off(num);  
+}  
+}  
+
+>WITH DELAY(SET OUT)
+
+ 
+#include"stm32F4xx_hal.h"  
+#include"Board_LED.h"  
+int main(void)  
+{  
+const unsigned intoff_code=0x0000;  
+const unsigned inton_code=0x00ff;  
+unsigned int i;  
+LED_Initialize();  
+{  
+for(;;)  
+{  
+for(i=0;i<30000;i++)  
+LED_SetOut(on_code);  
+for(i=0;i<30000;i++)  
+LED_SetOut(off_code);  
+}  
+}  
+}  
+
+>WITH DELAY
+
+ 
+#include"stm32F4xx_hal.h"  
+#include"Board_LED.h"  
+int main(void)  
+{  
+const unsigned int num=0;  
+unsigned int i=0;  
+LED_Initialize();  
+while(1)  
+{  
+for(i=0;i<50000:i++)    
+LED_On(num);  
+for(i=0;i<50000;i++)  
+LED_Off(num);  
+}  
+}  
